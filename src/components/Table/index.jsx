@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import classNames from 'classnames';
@@ -71,7 +72,7 @@ const Table = ({ columns, data }) => {
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
+        <tbody {...getTableBodyProps()}> 
           {page.map((row) => {
             prepareRow(row);
             return (
@@ -98,142 +99,7 @@ const Table = ({ columns, data }) => {
           })}
         </tbody>
       </table>
-      <div className={classNames('level', classes.level)}>
-        <div className="level-left">
-          <div className="control">
-            <span className="select">
-              <select
-                value={pageSize}
-                onChange={(e) => {
-                  setPageSize(Number(e.target.value));
-                }}
-              >
-                {[5, 10, 15, 20, 50].map((size) => (
-                  <option key={size} value={size}>
-                    {size} {perPage}
-                  </option>
-                ))}
-              </select>
-            </span>
-          </div>
-        </div>
-        <div className="level-right">
-          <div className="level-item">
-            <nav className="pagination">
-              <button
-                type="button"
-                className="pagination-link pagination-previous"
-                onClick={() => previousPage()}
-                disabled={!canPreviousPage}
-              >
-                <span className="icon" aria-hidden="true">
-                  <i className="mdi mdi-chevron-left mdi-24px" />
-                </span>
-              </button>
-              <button
-                type="button"
-                className="pagination-link pagination-next"
-                onClick={() => nextPage()}
-                disabled={!canNextPage}
-              >
-                <span className="icon" aria-hidden="true">
-                  <i className="mdi mdi-chevron-right mdi-24px" />
-                </span>
-              </button>
-              <ul className="pagination-list">
-                {pageIndex !== 0 && (
-                  <li>
-                    <button
-                      type="button"
-                      className="pagination-link"
-                      onClick={() => gotoPage(0)}
-                    >
-                      1
-                    </button>
-                  </li>
-                )}
-                {pageIndex > 3 && (
-                  <li>
-                    <span className="pagination-ellipsis">…</span>
-                  </li>
-                )}
-                {pageIndex === 3 && (
-                  <li>
-                    <button
-                      type="button"
-                      className="pagination-link"
-                      onClick={() => gotoPage(1)}
-                    >
-                      2
-                    </button>
-                  </li>
-                )}
-                {pageIndex - 1 > 0 && (
-                  <li>
-                    <button
-                      type="button"
-                      className="pagination-link"
-                      onClick={() => previousPage()}
-                    >
-                      {pageIndex}
-                    </button>
-                  </li>
-                )}
-                <li>
-                  <button
-                    type="button"
-                    className={classNames(
-                      'pagination-link',
-                      classes.currentPage
-                    )}
-                    aria-current="true"
-                  >
-                    {pageIndex + 1}
-                  </button>
-                </li>
-                {canNextPage && (
-                  <li>
-                    <button
-                      type="button"
-                      className="pagination-link"
-                      onClick={() => nextPage()}
-                    >
-                      {pageIndex + 2}
-                    </button>
-                  </li>
-                )}
-                {pageCount - pageIndex === 4 && (
-                  <li>
-                    <button
-                      type="button"
-                      className="pagination-link"
-                      onClick={() => gotoPage(pageCount - 2)}
-                    >
-                      {pageCount - 1}
-                    </button>
-                  </li>
-                )}
-                {pageCount - pageIndex > 4 && (
-                  <li>
-                    <span className="pagination-ellipsis">…</span>
-                  </li>
-                )}
-                {pageIndex + 2 < pageCount && (
-                  <li>
-                    <button
-                      type="button"
-                      className="pagination-link"
-                      onClick={() => gotoPage(pageCount - 1)}
-                    >
-                      {pageCount}
-                    </button>
-                  </li>
-                )}
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </div>
+      
     </div>
   );
 };

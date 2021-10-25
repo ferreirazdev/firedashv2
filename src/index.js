@@ -9,6 +9,7 @@ import ReduxToastr from 'react-redux-toastr';
 import Router from 'pages/Router';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import { configureStore } from './state/store';
+import './index.scss';
 
 const { store, persistor } = configureStore({});
 

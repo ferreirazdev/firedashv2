@@ -1,7 +1,6 @@
 export default {
-  ROOT: '/',
+  USERS: '/',
   LOGIN: '/login',
-  USERS: '/users',
   ADD_USER: '/users/new',
   MODIFY_USER: '/users/:id',
   PROFILE: '/profile',

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
@@ -9,7 +10,14 @@ import Table from 'components/Table';
 import { fetchUsers, deleteUser } from 'state/actions/users';
 import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
-import classes from './Users.module.scss';
+
+import {
+  Container,
+  UsersTopBar,
+  UsersContentWrapper,
+  ButtonEditWrapper,
+  AdminIconWrapper
+} from './styles';
 
 const Users = () => {
   const { usersList, isAdmin, error, loading, deleted } = useSelector(
@@ -89,7 +97,7 @@ const Users = () => {
       Header: useFormatMessage('Users.admin'),
       accessor: 'isAdmin',
       Cell: ({ row }) => (
-        <small className="has-text-grey is-abbr-like">
+        <AdminIconWrapper className="has-text-grey is-abbr-like">
           {row.original.isAdmin ? (
             <span className="icon">
               <i className="mdi mdi-check" />
@@ -99,7 +107,7 @@ const Users = () => {
               <i className="mdi mdi-close" />
             </span>
           )}
-        </small>
+        </AdminIconWrapper>
       ),
     },
     {
@@ -123,7 +131,7 @@ const Users = () => {
       Cell: ({ row }) => (
         <>
           {!row.original.isAdmin && (
-            <div className="buttons is-right">
+            <ButtonEditWrapper>
               <Link
                 to={`/users/${row.original.id}`}
                 className="button is-small is-primary"
@@ -142,7 +150,7 @@ const Users = () => {
                   <i className="mdi mdi-trash-can" />
                 </span>
               </button>
-            </div>
+            </ButtonEditWrapper>
           )}
         </>
       ),
@@ -163,15 +171,12 @@ const Users = () => {
     : usersList;
 
   const deleteMessage = useFormatMessage('Users.delete');
-
   const confirmMessage = useFormatMessage('Users.confirm');
-
   const permDeleteMessage = useFormatMessage('Users.permDelete');
-
   const cancelMessage = useFormatMessage('Users.cancel');
 
   return (
-    <>
+    <Container>
       {redirect}
       {deleteModal.isOpen && (
         <ConfirmationModal
@@ -185,44 +190,35 @@ const Users = () => {
           onCancel={onCloseModalHandler}
         />
       )}
-      <section className="hero is-hero-bar">
-        <div className="hero-body">
-          <div className="level">
-            <div className="level-left">
-              <div className="level-item">
+      <UsersTopBar>
+        <div className="usersTopBarWrapper">
+            
+            <div className="titleContentWrapper">
+              <div className="titleWrapper">
                 <h1 className="title">{useFormatMessage('Users.users')}</h1>
               </div>
             </div>
-            <div className="level-right">
-              <div className="level-item">
+            
+            <div className="createUserWrapper">
+              <div className="createUser">
                 <Link to={paths.ADD_USER} className="button">
                   {useFormatMessage('Users.newUser')}
                 </Link>
               </div>
             </div>
-          </div>
+          
         </div>
-      </section>
-      <section className="section is-main-section">
-        <div className="card has-table has-mobile-sort-spaced">
-          <header className="card-header">
-            <p className={classNames('card-header-title', classes.tableHeader)}>
-              <span>{useFormatMessage('Users.search')}</span>
-              <input
-                type="text"
-                className="input"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </p>
-          </header>
-          <div className="b-table">
+      </UsersTopBar>
+
+      <UsersContentWrapper>
+        <div className="usersWrapper">
+          <div className="Users">
             {loading ? <ClipLoader /> : <Table columns={columns} data={data} />}
             {error && 'Show error'}
           </div>
         </div>
-      </section>
-    </>
+      </UsersContentWrapper>
+    </Container>
   );
 };
 
