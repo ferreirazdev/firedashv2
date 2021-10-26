@@ -9,7 +9,9 @@ import UserForm from 'components/UserForm';
 import { createUser, modifyUser, fetchUsers } from 'state/actions/users';
 import paths from 'pages/Router/paths';
 import { useFormatMessage } from 'hooks';
-import './User.module.scss';
+import {
+  Container
+} from './styles';
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -49,7 +51,7 @@ const User = () => {
 
   const editUserMessage = useFormatMessage('User.editUser');
 
-  const newUserMessage = useFormatMessage('User.editUser');
+  const newUserMessage = useFormatMessage('User.newUser');
 
   const onSubmitHandler = (value) => {
     const newUser = {
@@ -67,7 +69,7 @@ const User = () => {
   };
 
   return (
-    <>
+    <Container>
       {redirect}
       <section className="hero is-hero-bar">
         <div className="hero-body">
@@ -98,7 +100,7 @@ const User = () => {
           />
         )}
       </section>
-    </>
+    </Container>
   );
 };
 

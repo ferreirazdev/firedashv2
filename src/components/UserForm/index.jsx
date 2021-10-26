@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
@@ -12,6 +13,10 @@ import { usersCleanUp } from 'state/actions/users';
 import { useFormatDate, useFormatMessage } from 'hooks';
 import DatePicker from 'components/DatePicker';
 import ErrorMessage from 'components/ErrorMessage';
+
+import {
+  Container
+} from './styles';
 
 import './UserForm.scss';
 
@@ -40,11 +45,6 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
 
   const invalidEmailMessage = useFormatMessage('UserForm.invalidEmail');
 
-  const imagePreviewUrl =
-    watch('file') && watch('file')[0]
-      ? URL.createObjectURL(watch('file')[0])
-      : user.logoUrl;
-
   const goBackMessage = useFormatMessage('UserForm.goBack');
 
   const pickAnotherFileMessage = useFormatMessage('UserForm.pickAnotherFile');
@@ -55,10 +55,11 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
   const adminMessage = useFormatMessage('UserForm.admin');
 
   return (
-    <>
+    <Container>
       <div className="tile is-ancestor">
         <div className="tile is-parent">
           <div className="card tile is-child">
+
             <header className="card-header">
               <p className="card-header-title">
                 <span className="icon">
@@ -67,6 +68,7 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
                 {useFormatMessage('UserForm.userInfo')}
               </p>
             </header>
+
             <div className="card-content">
               <form onSubmit={handleSubmit(onSubmitHandler)}>
                 {isEditing ? (
@@ -169,36 +171,31 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
                   </div>
                 </div>
                 {!isProfile && (
-                  <div className="field has-check is-horizontal">
+                  <div className="adminControl">
                     <div className="field-label">
                       <label className="label">{adminMessage}</label>
                     </div>
                     <div className="field-body">
-                      <div className="field">
-                        <div className="field">
-                          <div className="control">
-                            <label className="b-checkbox checkbox">
-                              <input
-                                type="checkbox"
-                                name="isAdmin"
-                                ref={register}
-                              />
-                              <span className="check is-primary" />
-                            </label>
-                          </div>
-                        </div>
-                      </div>
+                      <label className="b-checkbox checkbox">
+                        <input
+                          className="inputCheckbox"
+                          type="checkbox"
+                          name="isAdmin"
+                          ref={register}
+                        />
+                        <span className="check is-primary" />
+                       </label>
                     </div>
                   </div>
                 )}
 
-                <div className="field is-horizontal">
+                <div className="createdWrapper">
                   <div className="field-label is-normal">
                     <label className="label">
                       {useFormatMessage('UserForm.created')}
                     </label>
                   </div>
-                  <div className="field-body">
+                  <div className="created">
                     <div className="field">
                       <Controller
                         control={control}
@@ -224,8 +221,7 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
                     </label>
                   </div>
                   <div className="field-body">
-                    <div className="field">
-                      <div className="file has-name">
+                      <div className="fileInput">
                         <label className="file-label">
                           <input
                             className="file-input"
@@ -249,7 +245,6 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
                           </span>
                         </label>
                       </div>
-                    </div>
                   </div>
                 </div>
 
@@ -259,7 +254,12 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
                   <div className="field-body">
                     <div className="field">
                       <div className="field is-grouped">
-                        <div className="control">
+                        <div className="controlWrapper">
+                        {!isProfile && (
+                          <Link to={paths.USERS} className="button">
+                            {goBackMessage}
+                          </Link>
+                        )}
                           <button
                             type="submit"
                             className={`button is-primary ${
@@ -269,11 +269,6 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
                             <span>{useFormatMessage('UserForm.submit')}</span>
                           </button>
                         </div>
-                        {!isProfile && (
-                          <Link to={paths.USERS} className="button">
-                            {goBackMessage}
-                          </Link>
-                        )}
                       </div>
                     </div>
                   </div>
@@ -282,112 +277,8 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
             </div>
           </div>
         </div>
-        <div className="tile is-parent preview">
-          <div className="card tile is-child">
-            <header className="card-header">
-              <p className="card-header-title">
-                <span className="icon">
-                  <i className="mdi mdi-account default" />
-                </span>
-                {useFormatMessage('UserForm.userPreview')}
-              </p>
-            </header>
-            <div className="card-content">
-              {imagePreviewUrl && (
-                <>
-                  <div className="is-user-avatar image has-max-width is-aligned-center">
-                    <img
-                      className="user-avatar"
-                      src={imagePreviewUrl}
-                      alt="User profile logo preview"
-                    />
-                  </div>
-                  <hr />
-                </>
-              )}
-
-              {!isEditing && (
-                <div className="field">
-                  <label className="label">{emailMessage}</label>
-                  <div className="control is-clearfix">
-                    <input
-                      data-testid="email"
-                      type="text"
-                      readOnly="readOnly"
-                      className="input is-static"
-                      value={watch('email')}
-                    />
-                  </div>
-                </div>
-              )}
-
-              <div className="field">
-                <label className="label">
-                  {useFormatMessage('UserForm.name')}
-                </label>
-                <div className="control is-clearfix">
-                  <input
-                    data-testid="name"
-                    type="text"
-                    readOnly="readOnly"
-                    className="input is-static"
-                    value={watch('name')}
-                  />
-                </div>
-              </div>
-
-              <div className="field">
-                <label className="label">
-                  {useFormatMessage('UserForm.location')}
-                </label>
-                <div className="control is-clearfix">
-                  <input
-                    data-testid="location"
-                    type="text"
-                    readOnly="readOnly"
-                    className="input is-static"
-                    value={watch('location')}
-                  />
-                </div>
-              </div>
-
-              {!isProfile && (
-                <div className="field">
-                  <label className="label">{adminMessage}</label>
-                  <div className="control is-clearfix" data-testid="admin">
-                    {watch('isAdmin') ? (
-                      <span className="icon">
-                        <i className="mdi mdi-check" />
-                      </span>
-                    ) : (
-                      <span className="icon">
-                        <i className="mdi mdi-close" />
-                      </span>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              <div className="field">
-                <label className="label">
-                  {useFormatMessage('UserForm.created')}
-                </label>
-                <div className="control is-clearfix" data-testid="date">
-                  <p className="date">
-                    {useFormatDate(watch('createdAt'), {
-                      weekday: 'short',
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-    </>
+    </Container>
   );
 };
 

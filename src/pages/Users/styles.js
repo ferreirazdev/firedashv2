@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   margin: 100px;
   padding: 20px 50px;
-  background: #f1f1f1;
+  background: #17191e;
   border-radius: 20px;
   padding-bottom: 60px;
 `;
@@ -12,6 +12,10 @@ export const UsersTopBar = styled.section`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .title {
+      color: #F67E2D;
+    }
   }
 
   .createUser {
@@ -32,7 +36,7 @@ export const UsersTopBar = styled.section`
 
 export const UsersContentWrapper = styled.section`
   margin-top: 20px;
-
+  
 `;
 
 export const AdminIconWrapper = styled.small`

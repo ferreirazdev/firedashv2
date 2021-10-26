@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 
 import { useFormatMessage } from 'hooks';
 import classes from './Table.module.scss';
-import './TableMobile.css';
 
 const Table = ({ columns, data }) => {
   const {
