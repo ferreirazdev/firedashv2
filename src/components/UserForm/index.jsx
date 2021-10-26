@@ -18,8 +18,6 @@ import {
   Container
 } from './styles';
 
-import './UserForm.scss';
-
 const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
   const { loading, success } = useSelector(
     (state) => ({
@@ -57,9 +55,6 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
   return (
     <Container>
       <div className="tile is-ancestor">
-        <div className="tile is-parent">
-          <div className="card tile is-child">
-
             <header className="card-header">
               <p className="card-header-title">
                 <span className="icon">
@@ -275,8 +270,6 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
                 </div>
               </form>
             </div>
-          </div>
-        </div>
       </div>
     </Container>
   );

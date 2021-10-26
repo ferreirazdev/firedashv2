@@ -1,7 +1,13 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import './ConfirmationModal.scss';
+
+import {
+  Container,
+  ModalCard
+} from './styles';
 
 const ConfirmationModal = ({
   isActive,
@@ -17,15 +23,12 @@ const ConfirmationModal = ({
   const loadingModifier = isLoading && 'is-loading';
 
   return (
-    <div className={`modal ${modifiers}`}>
+    <Container className={`modal ${modifiers}`}>
       <div
         className="modal-background"
         onClick={!isLoading ? onCancel : undefined}
       />
-      <div className="modal-card">
-        <header className="modal-card-head">
-          <p className="modal-card-title">{title}</p>
-        </header>
+      <ModalCard>
         <section className="modal-card-body">{body}</section>
         <footer className="modal-card-foot">
           <button
@@ -37,15 +40,15 @@ const ConfirmationModal = ({
           </button>
           <button
             type="button"
-            className="button"
+            className="buttonCancel"
             onClick={onCancel}
             disabled={isLoading}
           >
             {cancelButtonMessage}
           </button>
         </footer>
-      </div>
-    </div>
+      </ModalCard>
+    </Container>
   );
 };
 
