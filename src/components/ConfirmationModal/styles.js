@@ -9,13 +9,17 @@ export const Container = styled.div`
   background: #000;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
-  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
   margin-left: -150px;
   margin-top: -200px;
+
+  @media(max-width: 600px){
+    width: 143%;
+    height: 100%;
+  }
 `;
 
 export const ModalCard = styled.div`
