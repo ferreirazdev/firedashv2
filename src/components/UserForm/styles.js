@@ -5,10 +5,13 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 50px;
+  
+
   .is-ancestor {
     background: #17191e;
     padding: 50px;
     display: flex;
+    flex-direction: column;
     align-items: center;
 
     a {
@@ -41,6 +44,7 @@ export const Container = styled.div`
   .card-header {
     p {
       font-size: 25px;
+
     }
   }
 

@@ -21,6 +21,12 @@ import ErrorMessage from 'components/ErrorMessage';
 import paths from 'pages/Router/paths';
 import classes from './Login.module.scss';
 
+import {
+  Container,
+  FormWrapper,
+  SocialButtons
+} from './styles';
+
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(6).required(),
@@ -100,13 +106,9 @@ const Login = () => {
   const invalidPasswordMessage = useFormatMessage('Login.invalidPassword');
 
   return (
-    <section className="section hero is-fullheight is-error-section">
+    <Container>
       {redirect}
-      <div className="hero-body">
-        <div className="container">
-          <div className="columns is-centered">
-            <div className="column is-two-fifths">
-              <div className="card has-card-header-background">
+      <div className="container">
                 <header className="card-header">
                   <p className="card-header-title">
                     <span className="icon">
@@ -117,7 +119,7 @@ const Login = () => {
                     </span>
                   </p>
                 </header>
-                <div className="card-content">
+                <FormWrapper>
                   <form onSubmit={handleSubmit(onSubmitHandler)}>
                     <div className="field">
                       <p className="label">{useFormatMessage('Login.email')}</p>
@@ -169,8 +171,19 @@ const Login = () => {
                         )
                       )}
                     </div>
+                    {error && (
+                      <p
+                        className={classNames(
+                          'has-text-danger',
+                          classes.errorMessage
+                        )}
+                      >
+                        {error}
+                      </p>
+                    )}
                     <br />
-                    <div className="field is-grouped">
+                    <div className="buttonLinkWrapper">
+                    
                       <div className="control">
                         <button
                           type="submit"
@@ -192,19 +205,10 @@ const Login = () => {
                         </div>
                       )}
                     </div>
-                    {error && (
-                      <p
-                        className={classNames(
-                          'has-text-danger',
-                          classes.errorMessage
-                        )}
-                      >
-                        {error}
-                      </p>
-                    )}
+                    
                   </form>
                   {!isEmailLink && (
-                    <>
+                    <SocialButtons>
                       <hr />
                       <div
                         className={classNames(
@@ -221,15 +225,12 @@ const Login = () => {
                           firebaseAuth={firebase.auth()}
                         />
                       </div>
-                    </>
+                    </SocialButtons>
                   )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                </FormWrapper>
+              
       </div>
-    </section>
+    </Container>
   );
 };
 

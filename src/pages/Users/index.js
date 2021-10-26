@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 import { useFormatMessage, useFormatDate } from 'hooks';
-import Table from 'components/Table';
 import { fetchUsers, deleteUser } from 'state/actions/users';
 import paths from 'pages/Router/paths';
 import ConfirmationModal from 'components/ConfirmationModal';
@@ -38,8 +37,6 @@ const Users = () => {
 
   const dispatch = useDispatch();
 
-  const [search, setSearch] = useState('');
-
   useEffect(() => {
       dispatch(fetchUsers());
   }, [dispatch]);
@@ -70,105 +67,7 @@ const Users = () => {
     dispatch(deleteUser(deleteModal.userId));
   };
 
-  const columns = [
-    {
-      Header: '',
-      accessor: 'logoUrl',
-      Cell: ({ row }) => (
-        <div className="image">
-          <img src={row.original.logoUrl} alt="" className="is-rounded" />
-        </div>
-      ),
-      disableSortBy: true,
-    },
-    {
-      Header: useFormatMessage('Users.name'),
-      accessor: 'name',
-    },
-    {
-      Header: useFormatMessage('Users.email'),
-      accessor: 'email',
-    },
-    {
-      Header: useFormatMessage('Users.location'),
-      accessor: 'location',
-    },
-    {
-      Header: useFormatMessage('Users.admin'),
-      accessor: 'isAdmin',
-      Cell: ({ row }) => (
-        <AdminIconWrapper className="has-text-grey is-abbr-like">
-          {row.original.isAdmin ? (
-            <span className="icon">
-              <i className="mdi mdi-check" />
-            </span>
-          ) : (
-            <span className="icon">
-              <i className="mdi mdi-close" />
-            </span>
-          )}
-        </AdminIconWrapper>
-      ),
-    },
-    {
-      Header: useFormatMessage('Users.created'),
-      accessor: 'created',
-      Cell: ({ row }) => (
-        <small className="has-text-grey is-abbr-like">
-          {useFormatDate(row.original.createdAt, {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          })}
-        </small>
-      ),
-    },
-    {
-      Header: '',
-      id: 'actions',
-      accessor: 'actions',
-      Cell: ({ row }) => (
-        <>
-          {!row.original.isAdmin && (
-            <ButtonEditWrapper>
-              <Link
-                to={`/users/${row.original.id}`}
-                className="button is-small is-primary"
-              >
-                <span className="icon is-small">
-                  <i className="mdi mdi-account-edit" />
-                </span>
-              </Link>
-
-              <button
-                type="button"
-                className="button is-small is-danger"
-                onClick={() => onRemoveButtonClickHandler(row.original.id)}
-              >
-                <span className="icon is-small">
-                  <i className="mdi mdi-trash-can" />
-                </span>
-              </button>
-            </ButtonEditWrapper>
-          )}
-        </>
-      ),
-      disableSortBy: true,
-    },
-  ];
-
-  const data = search
-    ? usersList.filter((el) => {
-        const clonedElem = { ...el };
-        delete clonedElem.id;
-        delete clonedElem.isAdmin;
-        delete clonedElem.logoUrl;
-        return Object.values(clonedElem).some((field) =>
-          field.toLowerCase().includes(search.toLowerCase())
-        );
-      })
-    : usersList;
+  console.log(usersList);
 
   const deleteMessage = useFormatMessage('Users.delete');
   const confirmMessage = useFormatMessage('Users.confirm');
@@ -211,12 +110,88 @@ const Users = () => {
       </UsersTopBar>
 
       <UsersContentWrapper>
-        <div className="usersWrapper">
-          <div className="Users">
-            {loading ? <ClipLoader /> : <Table columns={columns} data={data} />}
-            {error && 'Show error'}
-          </div>
+        <div>
+          <h1>Id</h1>
+          {loading ? <ClipLoader /> : usersList.map(user => (
+            <div className="infoWrapper" key={user.id}>
+              <div className="idWrapper">
+                <h3>{user.id}</h3>
+              </div>
+            </div>
+          ))}
         </div>
+        <div>
+          <h1>Nome</h1>
+          {loading ? <ClipLoader /> : usersList.map(user => (
+            <div className="infoWrapper" key={user.id}>
+              <div className="nameWrapper">
+                <h3>{user.name}</h3>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h1>Email</h1>
+          {loading ? <ClipLoader /> : usersList.map(user => (
+            <div className="infoWrapper" key={user.id}>
+              <div className="emailWrapper">
+                <h3>{user.email}</h3>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h1>Admin</h1>
+          {loading ? <ClipLoader /> : usersList.map(user => (
+            <div className="infoWrapper" key={user.id}>
+              <div className="isAdminWrapper">
+                <AdminIconWrapper className="has-text-grey is-abbr-like">
+                  {user.isAdmin ? (
+                    <span className="icon">
+                      <i className="mdi mdi-check" />
+                    </span>
+                    ) : (
+                    <span className="icon">
+                      <i className="mdi mdi-close" />
+                    </span>
+                    )}
+                </AdminIconWrapper>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div>
+          <h1>Ações</h1>
+          {loading ? <ClipLoader /> : usersList.map(user => (
+            <div className="infoWrapper" key={user.id}>
+              <div className="actionsWrapper">
+                <ButtonEditWrapper>
+                  <Link
+                    to={`/users/${user.id}`}
+                    className="button is-small is-primary"
+                  >
+                    <span className="icon is-small">
+                      <i className="mdi mdi-account-edit" />
+                    </span>
+                  </Link>
+                    <button
+                      type="button"
+                      className="button is-small is-danger"
+                      onClick={() => onRemoveButtonClickHandler(user.id)}
+                    >
+                      <span className="icon is-small">
+                        <i className="mdi mdi-trash-can" />
+                      </span>
+                    </button>
+                </ButtonEditWrapper>
+              </div>
+            </div>
+          ))}
+        </div>
+                      
+      
+        
+        
       </UsersContentWrapper>
     </Container>
   );
