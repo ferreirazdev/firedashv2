@@ -13,6 +13,12 @@ import ErrorMessage from 'components/ErrorMessage';
 
 import classes from './ResetPassword.module.scss';
 
+import {
+  Container,
+  FormWrapper,
+  ButtonWrapper
+} from './style';
+
 const schema = yup.object().shape({
   email: yup.string().email().required(),
 });
@@ -67,7 +73,7 @@ const ResetPassword = () => {
   const invalidEmailMessage = useFormatMessage('invalidEmail');
 
   return (
-    <section className="section hero is-fullheight is-error-section">
+    <Container className="section hero is-fullheight is-error-section">
       {redirect}
       <div className="hero-body">
         <div className="container">
@@ -82,7 +88,7 @@ const ResetPassword = () => {
                     <span>{useFormatMessage('ResetPassword.recovery')}</span>
                   </p>
                 </header>
-                <div className="card-content">
+                <FormWrapper className="card-content">
                   {restoredPassword ? (
                     <p className={classes['sub-title']}>
                       {recoverEmailMessage}
@@ -106,7 +112,7 @@ const ResetPassword = () => {
                         <p className="help">{emailRegistrationMessage}</p>
                       </div>
                       <hr />
-                      <div className="field is-grouped">
+                      <ButtonWrapper className="field is-grouped">
                         <div className="control">
                           <button
                             className={classNames(`button is-black`, {
@@ -122,7 +128,7 @@ const ResetPassword = () => {
                             {backMessage}
                           </Link>
                         </div>
-                      </div>
+                      </ButtonWrapper>
                       {error && (
                         <p
                           className={`has-text-danger ${classes.errorMessage}`}
@@ -132,13 +138,13 @@ const ResetPassword = () => {
                       )}
                     </form>
                   )}
-                </div>
+                </FormWrapper>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </Container>
   );
 };
 
